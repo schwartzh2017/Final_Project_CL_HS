@@ -1,0 +1,17 @@
+---
+title: "Final_Project_EDA_HS"
+author: "Haleigh Schwartz"
+date: "2024-07-09"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Load libraries
+```{r}
+
+
+```
+
