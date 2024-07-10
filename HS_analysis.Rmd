@@ -9,9 +9,75 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Load libraries
+# Load libraries and set wd
 ```{r}
+library(tidyverse)
+library(skimr)
+library(DataExplorer)
+library(fitdistrplus)
+library(broom)
+library(dplyr)
+library(lubridate)
 
+setwd("/Users/Haleigh/Documents/MSDS/Adv_ML/Final_Project_CL_HS")
 
+```
+
+# Read in and join ds
+```{r}
+ds1 = read_csv("bcsc_risk_factors_summarized1_092020.csv")
+ds2 = read_csv("bcsc_risk_factors_summarized2_092020.csv")
+ds3 = read_csv("bcsc_risk_factors_summarized3_092020.csv")
+
+ds = ds1 %>%
+  bind_rows(ds2) %>%
+  bind_rows(ds3)
+
+write_csv(ds, "joined_dataset.csv")
+
+#confirmed that "count" does not mean the frequency of all other columns. emailed 7/8/24 to ask what it means
+
+```
+# Clean and EDA
+```{r}
+#all columns should be read as factors/discrete except for count
+ds = ds %>%
+  mutate(year = as.factor(year),
+         age_group_5_years = as.factor(age_group_5_years),
+         race_eth = as.factor(race_eth),
+         first_degree_hx = as.factor(first_degree_hx),
+         age_menarche = as.factor(age_menarche),
+         age_first_birth = as.factor(age_first_birth),
+         BIRADS_breast_density = as.factor(BIRADS_breast_density),
+         current_hrt = as.factor(current_hrt),
+         menopaus = as.factor(menopaus),
+         bmi_group = as.factor(bmi_group),
+         biophx = as.factor(biophx),
+         breast_cancer_history = as.factor(breast_cancer_history))
+
+#see time span
+unique(ds$year)
+
+#drop 9s
+ds_no9 = ds %>% 
+  filter(year != "9",
+         age_group_5_years != "9",
+         race_eth != "9",
+         first_degree_hx != "9",
+         age_menarche != "9",
+         age_first_birth != "9",
+         BIRADS_breast_density != "9",
+         current_hrt != "9",
+         menopaus != "9",
+         bmi_group != "9",
+         biophx != "9",
+         breast_cancer_history != "9")
+
+#eda
+plot_str(ds)
+introduce(ds)
+plot_bar(ds)
+plot_histogram(ds)
+plot_correlation(na.omit(ds), maxcat = 5L)
 ```
 
