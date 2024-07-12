@@ -35,7 +35,10 @@ ds = ds1 %>%
 
 write_csv(ds, "joined_dataset.csv")
 
+<<<<<<< HEAD
 #confirmed that "count" does not mean the frequency of all other columns. emailed 7/8/24 to ask what it means
+=======
+>>>>>>> 95e3569 (finish eda)
 
 ```
 # Clean and EDA
@@ -79,5 +82,7 @@ introduce(ds)
 plot_bar(ds)
 plot_histogram(ds)
 plot_correlation(na.omit(ds), maxcat = 5L)
+plot_prcomp(ds, variance_cap = 0.9, nrow = 2L, ncol = 2L)
+plot_scatterplot(ds, by="breast_cancer_history")
 ```
 
